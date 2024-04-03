@@ -1,1 +1,1 @@
-export { CatsController } from './cats/cats.controller';
+export * from './cats';

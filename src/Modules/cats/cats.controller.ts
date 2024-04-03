@@ -1,29 +1,24 @@
 import { Response } from 'express';
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Body,
-  Res,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import { CatsService } from './cats.service';
 import { CreateCatDto } from '../../Models';
 @Controller('cats')
 export class CatsController {
-  @Get(':id')
-  findAll(@Param() params: any): string {
-    return `This action returns a #${params.id} cat`;
+  constructor(private catsService: CatsService) {}
+  @Get()
+  async findAll(): Promise<CreateCatDto[]> {
+    return this.catsService.findAll();
   }
+
   @Post()
   async create(
     @Body() createCatDto: CreateCatDto,
     @Res({ passthrough: true }) res: Response,
   ) {
+    this.catsService.create(createCatDto);
     return {
-      cat: createCatDto,
-      message: 'This action adds a new cat',
-      statusCode: res.status(HttpStatus.CREATED).statusCode,
+      message: 'Object has been Created',
+      statusCode: res.status(HttpStatus.OK).statusCode,
     };
   }
 }
