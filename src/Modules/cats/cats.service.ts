@@ -12,4 +12,7 @@ export class CatsService {
   findAll(): CreateCatDto[] {
     return this.cats;
   }
+  findOne(id: number): CreateCatDto[] {
+    return this.cats.filter((item) => item.id === id);
+  }
 }
